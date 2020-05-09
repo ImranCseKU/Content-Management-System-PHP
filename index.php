@@ -13,14 +13,29 @@
             <div class="col-md-8">
 
                 <?php
-                    //SQL query to fetch all Data from Post Table...
-                    $query = "SELECT * FROM `posts`";
-                    $res = mysqli_query($connection,$query);
-                    if(!$res){
-                        die("Query failed!!");
+
+                    //count number of post
+                    $countQuery = "SELECT * FROM posts";
+                    $countPost = mysqli_query($connection, $countQuery);
+                    $total_posts = mysqli_num_rows($countPost);
+
+                    $count = ceil($total_posts/5); // show 5 posts per page
+                    
+                    $pageNumber = isset($_GET['page']) ? $_GET['page'] : "" ;
+
+                    if($pageNumber =='' or $pageNumber==1){
+                        $paginateFrom = 0;
+                    }
+                    else{
+                        $paginateFrom = ($pageNumber * 5 ) - 5;
                     }
 
-                    while( $row = mysqli_fetch_assoc($res)){
+                    //SQL query to fetch all Data from Post Table...
+                    $query = "SELECT * FROM `posts` LIMIT $paginateFrom, 5";
+                    $result = mysqli_query($connection,$query) or die(mysqli_error($connection));
+
+                    
+                    while( $row = mysqli_fetch_assoc($result)){
                         $post_id = $row['post_id'];
                         $post_title = $row['post_title'];
                         $post_author = $row['post_author'];
@@ -33,7 +48,7 @@
 
                             ?> <!-- pause the while loop -->
 
-                            <!-- All Blog Post -->
+                            <!-- Show All Blog Post -->
                             <h2 class="entry-title">
                                 <a href="post_details.php?p_id=<?php echo $post_id;?>" > <?php echo $post_title; ?> </a>
                             </h2>
@@ -62,20 +77,41 @@
                 
                 ?> <!-- End of PHP section -->
                         
+                
                         
+                    </div>
+                    
+                    
+                    <!-- Blog Sidebar Widgets Column -->
+                    <?php include "includes/sidebar.php";    ?>
+                    
+                    
+                    
+                </div>
+                <!-- /.row -->
+                
+                <!-- pager/pagination         -->
+                <ul class="pager">
+                    <?php 
+                        for($i= 1; $i<= $count; $i++){ 
+                        
+                            if( $i == $pageNumber){
+                                echo "<li><a class='active-page' href='index.php?page=$i'> $i </a></li>";
+                            }
+                            else{
+                                echo "<li><a href='index.php?page=$i'> $i </a></li>";
+                            }
+                            
+                        }
+                    ?>
+                    <!-- <li><a href="#">Next</a></li>   -->
+                </ul>
 
-            </div>
-
-
-            <!-- Blog Sidebar Widgets Column -->
-            <?php include "includes/sidebar.php";    ?>
+                <hr>
+                
 
 
 
-        </div>
-        <!-- /.row -->
-
-        <hr>
-<?php include "includes/footer.php";   ?>
-
+                <?php include "includes/footer.php";   ?>
+                
         

@@ -18,6 +18,10 @@
                     if(isset($_GET['p_id'])){
                         $the_post_id= $_GET['p_id'];
 
+                        //increase views
+                        $query_for_view = "UPDATE posts SET post_views_count = post_views_count +1 WHERE post_id = $the_post_id;";
+                        $increase_views = mysqli_query($connection, $query_for_view) or die( mysqli_error($connection));
+
                         //SQL query to fetch all Data for the specific $id from Post Table...
                         $query = "SELECT * FROM `posts` WHERE post_id=$the_post_id;";
                         $res = mysqli_query($connection,$query);

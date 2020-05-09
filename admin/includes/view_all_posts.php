@@ -20,8 +20,11 @@
                 case 'delete': 
                     
                     $query = "DELETE FROM posts WHERE post_id = $checked_id;";
-                    $delete_post = mysqli_query($connection, $query) or die( mysqli_error($connection));
-                    
+                    $delete_post = mysqli_query($connection, $query) or die( mysqli_error($connection));    
+                break;
+                case 'reset': 
+                    $query = "UPDATE posts SET post_views_count = 0 WHERE post_id = $checked_id;";
+                    $reset_views = mysqli_query($connection, $query) or die( mysqli_error($connection));
                 break;
 
             }
@@ -39,6 +42,7 @@
                 <option value="published">Publish</option>
                 <option value="draft">Draft</option>
                 <option value="delete">Delete</option>
+                <option value="reset">Reset Views</option>
             </select>
         </div>
 
@@ -59,7 +63,9 @@
                 <th>Tags</th>
                 <th>Comments</th>
                 <th>Date</th>
-                <th>Action</th>
+                <th>Views</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -80,13 +86,15 @@
                     $post_tags = $row['post_tags'];
                     $post_comments = $row['post_comment_count'];
                     $post_date = $row['post_date'];
+                    $post_views = $row['post_views_count'];
 
                     //get category name from categories table using category id from post table
                     $category_name_query = "SELECT * FROM categories WHERE cat_id=$post_category_id";
-                    $get_category_name= mysqli_query($connection, $category_name_query) or die(mysqli_error($connection));
-                    while($row = mysqli_fetch_assoc($get_category_name)){
-                        $category_title = $row['cat_title'];
-                    }
+                    $get_category_details= mysqli_query($connection, $category_name_query) or die(mysqli_error($connection));
+                    
+                    $row = mysqli_fetch_assoc($get_category_details);
+                    $category_title = $row['cat_title'];
+                    
 
 
                     echo "<tr>";
@@ -94,8 +102,8 @@
 
                         <td><input type='checkbox' class='bulkOptionClass' name='check_list[]' value='<?php echo $post_id; ?>'></td>
 
-
                         <?php
+
                         echo "<td>$post_id</td>";
                         echo "<td>$post_author</td>";
                         echo "<td>$post_title</td>";
@@ -105,11 +113,10 @@
                         echo "<td>$post_tags</td>";
                         echo "<td>$post_comments</td>";
                         echo "<td>$post_date</td>";
-                        echo "<td>
-                                <a href='posts.php?source=edit_post&p_id=$post_id' class='btn btn-sm btn-block btn-warning'>Edit</a><br>
-                                <a href='posts.php?delete=$post_id' onclick=\"return confirm('are you sure you want to delete');\" class='btn btn-sm btn-block btn-danger'>Delete</a>
-                            </td>";
-                    echo "</tr>";
+                        echo "<td>$post_views</td>";
+                        echo "<td> <a href='posts.php?source=edit_post&p_id=$post_id' class='btn btn-sm btn-block btn-warning'>Edit</a> </td>";
+                        echo "<td> <a href='posts.php?delete=$post_id' onclick=\"return confirm('are you sure you want to delete');\" class='btn btn-sm btn-block btn-danger'>Delete</a> </td>";
+                        echo "</tr>";
                 }
 
                 

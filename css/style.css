@@ -26,3 +26,9 @@ a:hover{
 .author_name{
     display: inline;
 }
+
+.pager li .active-page{
+    background-color: #333;
+    color: #fff;
+    font-weight:bold;
+}
