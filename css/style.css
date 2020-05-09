@@ -1,0 +1,28 @@
+.entry-title {
+    display: block;
+    padding: 5px 0 0;
+    color: #333;
+    margin-bottom: 0;
+    font-size: 32px;
+    line-height: 38.5px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+a{
+    color:#606c7e;
+    text-decoration: none;
+
+}
+
+.entry-title a{
+    color: #333;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #EB5F3A;
+    text-decoration: none;
+}
+.author_name{
+    display: inline;
+}
