@@ -8,7 +8,7 @@ $(document).ready( function(){
             console.error( error );
         } );
     }
-    //select all checkbox
+    //select all bulkOption checkbox
     $('#bulkOptionId').change( function(event){
         if(this.checked){
             
@@ -23,7 +23,17 @@ $(document).ready( function(){
                 this.checked = false;
             });
         }
-
+        
     });
+
+    var loader = "<div id='load-screen'> <div id='loading'></div> </div>";
+
+    $("body").prepend(loader);
+
+    $('#load-screen').delay(700).fadeOut(600, function(){
+        $(this).remove();
+    })
+
+
     
 });
