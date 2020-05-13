@@ -131,11 +131,19 @@
 
 <?php
     if(isset($_GET['delete'])){
-        $deleted_post_id = $_GET['delete'];
 
-        $query = "DELETE FROM posts WHERE `post_id`=$deleted_post_id";
+        if( isset($_SESSION['user_role']) ){
+            if( $_SESSION['user_role'] == 'admin' ){
+                
+                $deleted_post_id = mysqli_real_escape_string($connection,$_GET['delete']) ;
 
-        $delete_post = mysqli_query($connection, $query);
-        header("Location:posts.php");
+                $query = "DELETE FROM posts WHERE `post_id`=$deleted_post_id";
+
+                $delete_post = mysqli_query($connection, $query);
+                header("Location:posts.php");
+            }
+        }
+
+        
     }
 ?>

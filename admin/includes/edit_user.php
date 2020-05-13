@@ -2,24 +2,32 @@
 
 <?php
     if(isset($_GET['u_id'])){
-        $edited_user_id = $_GET['u_id'];
+
+        //only admin can change user details
+        if($_SESSION['user_role'] != 'admin'){
+            header("Location: users.php");
+        }
+        else{
+            $edited_user_id = $_GET['u_id'];
+
+            $query = "SELECT * FROM users WHERE user_id=$edited_user_id;";
+            $get_user = mysqli_query($connection, $query);
+            
+            $row = mysqli_fetch_assoc($get_user);
+
+            $user_id = $row['user_id'];
+            $user_firstname = $row['user_firstname'];
+            $user_lastname = $row['user_lastname'];
+            $user_email = $row['user_email'];
+            $user_role = $row['user_role'];
+            $user_img = $row['user_image'];
+            $username = $row['username'];
+            $user_password = $row['user_password'];
+        }
+              
     }
 
-    $query = "SELECT * FROM users WHERE user_id=$edited_user_id;";
-    $get_user = mysqli_query($connection, $query);
     
-    while($row = mysqli_fetch_assoc($get_user)){
-        $user_id = $row['user_id'];
-        $user_firstname = $row['user_firstname'];
-        $user_lastname = $row['user_lastname'];
-        $user_email = $row['user_email'];
-        $user_role = $row['user_role'];
-        $user_img = $row['user_image'];
-        $username = $row['username'];
-        $user_password = $row['user_password'];
-        
-
-    }
 
     if(isset($_POST['update_user'])){
         $user_firstname = mysqli_real_escape_string($connection,$_POST['user_firstname']);
@@ -32,7 +40,7 @@
         $user_image_temp = $_FILES['img']['tmp_name'];
 
 
-        $username = mysqli_real_escape_string($connection,$_POST['username']);
+        // $username = mysqli_real_escape_string($connection,$_POST['username']);
         // $user_password = $_POST['user_password'];
 
         
@@ -47,7 +55,7 @@
         }
 		
         $query_for_update = "UPDATE users SET ";
-        $query_for_update .= "username='$username',";
+        // $query_for_update .= "username='$username',";
         // $query_for_update .= "user_password='$user_password',";
         $query_for_update .= "user_firstname='$user_firstname',";
         $query_for_update .= "user_lastname= '$user_lastname' ,";
@@ -109,10 +117,10 @@
             <input type="file" class="form-control" name="img">
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="">Username</label>
             <input type="text" class="form-control" name="username" value="<?php echo $username; ?>">
-        </div>
+        </div> -->
 
         <!-- <div class="form-group">
             <label for="">Password</label>

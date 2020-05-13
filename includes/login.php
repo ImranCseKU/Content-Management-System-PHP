@@ -13,9 +13,9 @@ if(isset($_POST['login'])){
 
     $query = "SELECT * FROM users WHERE username='$username';";
 
-    $check_credential = mysqli_query($connection, $query) or die( mysqli_error($connection));
+    $get_credential = mysqli_query($connection, $query) or die( mysqli_error($connection));
     
-    $row = mysqli_fetch_assoc($check_credential);
+    $row = mysqli_fetch_assoc($get_credential);
 
     $db_user_id = $row['user_id'];
     $db_username = $row['username'];

@@ -58,8 +58,8 @@
         $query_for_update .= "WHERE post_id=$edited_post_id";
 
         $post_update = mysqli_query($connection, $query_for_update) or die("sql error: ".mysqli_error($connection));
-        header("Location:posts.php");
-        // header("Location:../post_details.php?p_id=$post_id");
+        // header("Location:posts.php");
+        header("Location:../post_details.php?p_id=$post_id");
     }
 
     

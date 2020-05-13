@@ -27,7 +27,7 @@
         $user_firstname = mysqli_real_escape_string($connection,$_POST['user_firstname']);
         $user_lastname= mysqli_real_escape_string($connection,$_POST['user_lastname']);
         $user_email = mysqli_real_escape_string($connection,$_POST['user_email']);
-        $user_role = mysqli_real_escape_string($connection,$_POST['user_role']);
+        // $user_role = mysqli_real_escape_string($connection,$_POST['user_role']);
 
         $user_image = $_FILES['img']['name'];
         $user_image_unique_name = time().'_'.$user_image;
@@ -57,9 +57,9 @@
         $query_for_update .= "user_firstname='$user_firstname',";
         $query_for_update .= "user_lastname= '$user_lastname' ,";
         $query_for_update .= "user_email='$user_email',";
-        $query_for_update .= "user_image='$user_image',";
-        $query_for_update .= "user_role='$user_role' ";
-        $query_for_update .= "WHERE user_id= $user_id ";
+        $query_for_update .= "user_image='$user_image' ";
+        // $query_for_update .= "user_role='$user_role' ";
+        $query_for_update .= "WHERE user_id= $user_id ;";
 
         $user_update = mysqli_query($connection, $query_for_update) or die(mysqli_error($connection));
         header("Location:users.php");
@@ -106,10 +106,11 @@
                                     <input type="email" class="form-control" name="user_email" value="<?php echo $user_email; ?>">
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="user_role">Role</label></br>
                                     <select name="user_role" id="user_role" class="form-control">
                                         <?php 
+                                            /*
                                             if($user_role == 'admin')
                                             {
                                                 ?>
@@ -122,11 +123,11 @@
                                                 <option value='admin'>Admin</option>
                                                 <option value='subscriber' selected>Subscriber</option>
                                                 <?php
-                                            }
+                                            }*/
                                         ?>
                                         
                                     </select>
-                                </div>
+                                </div> -->
 
                                 <div class="form-group">
                                     <label for="">User Image</label></br>
@@ -140,7 +141,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Password</label>
-                                    <input type="password" id="pass" class="form-control" name="user_password" placeholder="you can set new password">
+                                    <input type="password" autocomplete="off" id="pass" class="form-control" name="user_password" placeholder="you can set new password">
                                     <input type="checkbox" id="show_password">Show Password
                                 </div>
                             

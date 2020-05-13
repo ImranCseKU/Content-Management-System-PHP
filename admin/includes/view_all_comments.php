@@ -68,12 +68,20 @@
 
 <?php
     if(isset($_GET['delete'])){
-        $deleted_comment_id = $_GET['delete'];
 
-        $query = "DELETE FROM comments WHERE `comment_id`=$deleted_comment_id";
+        if( isset($_SESSION['user_role']) ){
+            if( $_SESSION['user_role'] == 'admin' ){
 
-        $delete_comment = mysqli_query($connection, $query);
-        header("Location: comments.php");
+                $deleted_comment_id = mysqli_real_escape_string($connection,$_GET['delete']);
+                $query = "DELETE FROM comments WHERE `comment_id`=$deleted_comment_id";
+
+                $delete_comment = mysqli_query($connection, $query);
+                header("Location: comments.php");
+            }
+        }
+
+
+        
     }
 ?>
 

@@ -54,16 +54,22 @@
         global $connection;
         
         if(isset($_GET['delete'])){
-            $deleted_cat_id  = $_GET['delete'];
-            //SQL query to delete category item... 
-            $query_to_delete = "DELETE FROM categories WHERE cat_id='{$deleted_cat_id}'";
-            $res = mysqli_query($connection, $query_to_delete);
-            if(!$res){
-                die("Query failed to delete category item".mysqli_error($connection));
+
+            if( isset($_SESSION['user_role']) ){
+
+                if($_SESSION['user_role'] == 'admin'){
+                    
+                    $deleted_cat_id  = mysqli_real_escape_string($connection, $_GET['delete']);
+                    //SQL query to delete category item... 
+                    $query_to_delete = "DELETE FROM categories WHERE cat_id='{$deleted_cat_id}'";
+                    $res = mysqli_query($connection, $query_to_delete) or die(mysqli_error($connection));
+                    
+                    header("Location:categories.php");
+                    
+                }
             }
-            else{
-                header("Location:categories.php");
-            }
+
+            
         }
     }
 
