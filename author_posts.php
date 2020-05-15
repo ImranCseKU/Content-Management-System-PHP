@@ -16,9 +16,9 @@
                 <?php
 
                     if(isset($_GET['author'])){
-                        $the_post_author= $_GET['author'];
+                        $the_post_author= mysqli_real_escape_string($connection, $_GET['author']) ;
 
-                        //SQL query to fetch all Data for the specific $id from Post Table...
+                        //SQL query to fetch all posts for the specific author from Post Table...
                         $query = "SELECT * FROM `posts` WHERE post_author='$the_post_author';";
                         $res = mysqli_query($connection,$query) or die(mysqli_error($connection));
                   

@@ -25,7 +25,7 @@
 
                             Welcome to Admin Panel
                             <small> <?php echo $_SESSION['username']; ?></small>
-                            <?php //session_destroy(); ?>
+                            
      
                         </h1>
 
@@ -44,7 +44,8 @@
                                         <i class="fa fa-file-text fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                <div class='huge'> <?php $count_posts = countPosts(); echo $count_posts; ?> </div>
+                                        <!-- countPosts() method discription placed inside function.php -->
+                                        <div class='huge'> <?php $count_posts = countPosts(); echo $count_posts; ?> </div>
                                         <div>Posts</div>
                                     </div>
                                 </div>
@@ -66,8 +67,8 @@
                                         <i class="fa fa-comments fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                    <div class='huge'> <?php $count_comments = countComments(); echo $count_comments; ?> </div>
-                                    <div>Comments</div>
+                                        <div class='huge'> <?php $count_comments = countComments(); echo $count_comments; ?> </div>
+                                        <div>Comments</div>
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +89,7 @@
                                         <i class="fa fa-user fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                    <div class='huge'> <?php $count_users = countUsers(); echo $count_users; ?> </div>
+                                        <div class='huge'> <?php $count_users = countUsers(); echo $count_users; ?> </div>
                                         <div> Users</div>
                                     </div>
                                 </div>

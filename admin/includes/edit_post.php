@@ -2,38 +2,39 @@
 
 <?php
     if(isset($_GET['p_id'])){
-        $edited_post_id = $_GET['p_id'];
+        $edited_post_id = mysqli_real_escape_string($connection, $_GET['p_id']) ;
     }
 
     $query = "SELECT * FROM posts WHERE post_id=$edited_post_id";
-    $get_post = mysqli_query($connection, $query);
+    $get_post = mysqli_query($connection, $query) or die(mysqli_error($connection));
     
-    while($row = mysqli_fetch_assoc($get_post)){
-        $post_id = $row['post_id'];
-        $post_author = $row['post_author'];
-        $post_title = $row['post_title'];
-        $post_content = $row['post_content'];
-        $post_category_id = $row['post_category_id'];
-        $post_status = $row['post_status'];
-        $post_image = $row['post_image'];
-        $post_tags = $row['post_tags'];
-        $post_comments = $row['post_comment_count'];
-        $post_date = $row['post_date'];
-    }
+    $row = mysqli_fetch_assoc($get_post);
+
+    $post_id = $row['post_id'];
+    $post_author = $row['post_author'];
+    $post_title = $row['post_title'];
+    $post_content = $row['post_content'];
+    $post_category_id = $row['post_category_id'];
+    $post_status = $row['post_status'];
+    $post_image = $row['post_image'];
+    $post_tags = $row['post_tags'];
+    $post_comments = $row['post_comment_count'];
+    $post_date = $row['post_date'];
+    
 
     if(isset($_POST['update_post'])){
-        $post_author = mysqli_real_escape_string($connection,$_POST['author']);
-        $post_title = mysqli_real_escape_string($connection,$_POST['title']);
-        $post_category_id = $_POST['post_category_id'];
-        $post_status = ($_POST['status']) ? $_POST['status']: 'draft';
+        $post_author = mysqli_real_escape_string($connection, trim($_POST['author']) );
+        $post_title = mysqli_real_escape_string($connection, trim($_POST['title']) );
+        $post_category_id = mysqli_real_escape_string($connection, $_POST['post_category_id']);
+        $post_status = mysqli_real_escape_string($connection, $_POST['status']);
 
         $post_images = $_FILES['img']['name'];
         $post_image_unique_name = time().'_'.$post_images;
         $post_image_temp = $_FILES['img']['tmp_name'];
 
 
-        $post_tags = mysqli_real_escape_string($connection,$_POST['tags']);
-        $post_content = mysqli_real_escape_string($connection,$_POST['content']);
+        $post_tags = mysqli_real_escape_string($connection, trim($_POST['tags']) );
+        $post_content = mysqli_real_escape_string($connection, trim($_POST['content']) );
         
         
         

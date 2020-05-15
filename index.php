@@ -21,7 +21,7 @@
 
                     $count = ceil($total_posts/5); // show 5 posts per page
                     
-                    $pageNumber = isset($_GET['page']) ? $_GET['page'] : "" ;
+                    $pageNumber = isset($_GET['page']) ? mysqli_real_escape_string($connection, $_GET['page']) : "" ;
 
                     if($pageNumber =='' or $pageNumber==1){
                         $paginateFrom = 0;

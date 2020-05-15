@@ -16,7 +16,7 @@
                 <?php
 
                     if(isset($_GET['p_id'])){
-                        $the_post_id= $_GET['p_id'];
+                        $the_post_id= mysqli_real_escape_string($connection, $_GET['p_id']);
 
                         //increase views
                         $query_for_view = "UPDATE posts SET post_views_count = post_views_count +1 WHERE post_id = $the_post_id;";
@@ -24,10 +24,8 @@
 
                         //SQL query to fetch all Data for the specific $id from Post Table...
                         $query = "SELECT * FROM `posts` WHERE post_id=$the_post_id;";
-                        $res = mysqli_query($connection,$query);
-                        if(!$res){
-                            die(mysqli_error($connection));
-                        }
+                        $res = mysqli_query($connection,$query) or die(mysqli_error($connection));
+                    
 
                         while( $row = mysqli_fetch_assoc($res)){
                             $post_title = $row['post_title'];
@@ -42,7 +40,7 @@
                             
                             <!-- First Blog Post -->
                             <h2>
-                                <p style="font-weight:bold; background:#1fc8db; padding:25px;"> <?php echo $post_title; ?> </p>
+                                <p style="font-weight:bold; background:#1fc8db; padding:25px; text-align:center"> <?php echo $post_title; ?> </p>
                             </h2>
                             <p class="lead">
                                 by <a href="author_posts.php?author=<?php echo $post_author;?>" > <?php echo ucwords($post_author); ?> </a>
@@ -100,9 +98,9 @@
             <?php
                 if( isset($_POST['create_comment'])){
 
-                    $comment_author =  mysqli_real_escape_string($connection,$_POST['comment_author']);
-                    $comment_email =  mysqli_real_escape_string($connection,$_POST['comment_email']);
-                    $comment_content = mysqli_real_escape_string($connection, $_POST['comment_content']);
+                    $comment_author =  mysqli_real_escape_string($connection, trim($_POST['comment_author']) );
+                    $comment_email =  mysqli_real_escape_string($connection, trim($_POST['comment_email']) );
+                    $comment_content = mysqli_real_escape_string($connection, trim($_POST['comment_content'] ) );
 
                     if( !empty($comment_author) and !empty($comment_email) and !empty($comment_content)){
                         //store comment

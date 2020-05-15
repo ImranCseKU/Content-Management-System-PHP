@@ -4,11 +4,11 @@
                 <!-- Blog Search Well -->
                 <div class="well">
                     <h4>Blog Search</h4>
-                    <form action="./search.php" method="post">
+                    <form action="search.php" method="get" autocomplete="off">
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control">
+                            <input type="text" name="key" class="form-control">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit" name="submit">
+                                <button class="btn btn-default" type="submit" >
                                     <span class="glyphicon glyphicon-search"></span>
                                 </button>
                             </span>

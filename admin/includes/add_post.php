@@ -3,9 +3,9 @@
     if( isset($_POST['create_post']) ){
 
         
-        $post_author = mysqli_real_escape_string($connection,$_POST['author']);
-        $post_title = mysqli_real_escape_string($connection,$_POST['title']);
-        $post_category_id = mysqli_real_escape_string($connection,$_POST['post_category_id']);
+        $post_author = mysqli_real_escape_string($connection, trim($_POST['author']) );
+        $post_title = mysqli_real_escape_string($connection, trim($_POST['title']) );
+        $post_category_id = mysqli_real_escape_string($connection, trim($_POST['post_category_id']) );
         $post_status = ($_POST['status']) ? mysqli_real_escape_string($connection,$_POST['status']) : 'draft';
 
         $post_image = $_FILES['img']['name'];
@@ -13,8 +13,8 @@
         $post_image_temp = $_FILES['img']['tmp_name'];
 
 
-        $post_tags = mysqli_real_escape_string($connection,$_POST['tags']);
-        $post_content = mysqli_real_escape_string($connection,$_POST['content']);
+        $post_tags = mysqli_real_escape_string($connection, trim($_POST['tags']) );
+        $post_content = mysqli_real_escape_string($connection, trim($_POST['content']) );
         $post_date = date('d-m-y');
         
         

@@ -4,9 +4,9 @@
 <?php 
 
     if(isset($_POST['register'])){
-        $username =  mysqli_real_escape_string($connection, $_POST['username']);
-        $user_email = mysqli_real_escape_string($connection, $_POST['email']);
-        $user_password = mysqli_real_escape_string($connection, $_POST['password']);
+        $username =  mysqli_real_escape_string($connection, trim($_POST['username']) );
+        $user_email = mysqli_real_escape_string($connection, trim($_POST['email']) );
+        $user_password = mysqli_real_escape_string($connection, trim($_POST['password']) );
 
         $user_password = password_hash($user_password, PASSWORD_DEFAULT);
 
