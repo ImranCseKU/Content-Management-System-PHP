@@ -47,10 +47,7 @@
                 <?php
                     //SQL query to fetch all catagories and show into Sidebar...
                     $query = "SELECT * FROM `categories`";  // We can LIMIT categories
-                    $result = mysqli_query($connection, $query);
-                    if(!$result){
-                        die("Query failed!!");
-                    }
+                    $result = mysqli_query($connection, $query) or die(mysqli_error($connection));
 
                 
                 ?>
@@ -92,6 +89,6 @@
                 </div>
 
                 <!-- Side Widget Well -->
-                <?php include "widget.php"; ?>
+                <?php //include "widget.php"; ?>
 
             </div>

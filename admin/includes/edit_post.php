@@ -16,7 +16,7 @@
     $post_content = $row['post_content'];
     $post_category_id = $row['post_category_id'];
     $post_status = $row['post_status'];
-    $post_image = $row['post_image'];
+    $db_post_image = $row['post_image'];
     $post_tags = $row['post_tags'];
     $post_comments = $row['post_comment_count'];
     $post_date = $row['post_date'];
@@ -28,8 +28,8 @@
         $post_category_id = mysqli_real_escape_string($connection, $_POST['post_category_id']);
         $post_status = mysqli_real_escape_string($connection, $_POST['status']);
 
-        $post_images = $_FILES['img']['name'];
-        $post_image_unique_name = time().'_'.$post_images;
+        $post_image = $_FILES['img']['name'];
+        $post_image_unique_name = time().'_'.$post_image;
         $post_image_temp = $_FILES['img']['tmp_name'];
 
 
@@ -43,8 +43,8 @@
         move_uploaded_file($post_image_temp, "../images/$post_image_unique_name");
 
         //if image not set..set it privious
-        if(empty($post_images)){
-            $post_image_unique_name = $post_image;
+        if(empty($post_image)){
+            $post_image_unique_name = $db_post_image;
         }
 
         $query_for_update = "UPDATE posts SET ";
@@ -119,7 +119,7 @@
     </div>
     <div class="form-group">
         <label for="title">Post Image</label></br>
-        <img src="../images/<?php echo $post_image; ?>" width="100px" alt="">
+        <img src="../images/<?php echo $db_post_image; ?>" width="100px" alt="">
         <input type="file" class="form-control" name="img">
     </div>
 

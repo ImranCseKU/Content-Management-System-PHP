@@ -47,7 +47,7 @@
                             </p>
                             <p> <span class="glyphicon glyphicon-time"></span> <?php echo $post_date; ?> </p>
                             <hr>
-                            <img class="img-responsive img-rounded" src="images/<?php echo $post_image; ?> " alt="">
+                            <img class="img-responsive img-rounded" src="images/<?php echo $post_image; ?> " alt="post-img" style="width: 85%; height: auto;">
                             <hr>
                             <p><?php echo $post_content; ?></p><br>
 
@@ -96,7 +96,7 @@
         <div class="col-md-8">
             
             <?php
-                if( isset($_POST['create_comment'])){
+                if( isset($_POST['comment_on_post'])){
 
                     $comment_author =  mysqli_real_escape_string($connection, trim($_POST['comment_author']) );
                     $comment_email =  mysqli_real_escape_string($connection, trim($_POST['comment_email']) );
@@ -105,7 +105,7 @@
                     if( !empty($comment_author) and !empty($comment_email) and !empty($comment_content)){
                         //store comment
                         $query = "INSERT INTO `comments`(comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
-                        $query .= "VALUES($the_post_id, '$comment_author', '$comment_email', '$comment_content', 'unapproved', now() );";
+                        $query .= "VALUES($the_post_id, '$comment_author', '$comment_email', '$comment_content', 'approved', now() );";
 
                         $create_comment_result = mysqli_query($connection, $query) or die( mysqli_error($connection));
 
@@ -141,7 +141,7 @@
                         <label for="">Your Comment</label>
                         <textarea class="form-control" rows="3" name="comment_content"></textarea>
                     </div>
-                    <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
+                    <button type="submit" name="comment_on_post" class="btn btn-primary">Submit</button>
                 </form>
             </div>
 

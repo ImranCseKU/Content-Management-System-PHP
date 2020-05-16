@@ -9,29 +9,28 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php">Master CMS</a>
+            <a class="navbar-brand" href="index.php" style="font-weight:bold;">Master CMS</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse justify-content-between" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right" id= 'navigation-item'>
                 
                 <?php
                     //SQL query to fetch all catagories and show into NAVBAR...
                     $query = "SELECT * FROM `categories`";
-                    $result = mysqli_query($connection, $query);
-                    if(!$result){
-                        die("Query failed!!");
-                    }
+                    $result = mysqli_query($connection, $query) or die( mysqli_error($connection));
+                
 
                     while( $row = mysqli_fetch_assoc($result)){
+                        $cat_id = $row['cat_id'];
                         $cat_title = $row['cat_title'];
 
-                        echo "<li><a href='#'>{$cat_title}</a></li>";
+                        echo "<li><a class='text-white text-uppercase font-weight-bold px-3' href='category.php?category=$cat_id'>{$cat_title}</a></li>";
                     }
                 
                 ?>
                 <li>
-                    <a href="admin/" class="text-uppercase">Admin</a>
+                    <a href="admin/" class='text-white text-uppercase font-weight-bold px-3'>Account</a>
                 </li>
 
                 

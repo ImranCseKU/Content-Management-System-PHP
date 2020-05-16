@@ -15,14 +15,12 @@
                 <?php
 
                     if(isset($_GET['category'])){
-                        $get_category_post = $_GET['category'];
+                        $get_category_post = mysqli_real_escape_string($connection, trim($_GET['category']) );
                     }
                     //SQL query to fetch all Data from Post Table...
                     $query = "SELECT * FROM `posts` WHERE `post_category_id`=$get_category_post;";
-                    $res = mysqli_query($connection,$query);
-                    if(!$res){
-                        die("Query failed!!");
-                    }
+                    $res = mysqli_query($connection,$query) or die(mysqli_error($connection));
+                
 
                     while( $row = mysqli_fetch_assoc($res)){
                         $post_id = $row['post_id'];
@@ -38,17 +36,17 @@
                         
                         <!-- First Blog Post -->
                         <h2>
-                            <a href="post.php?p_id=<?php echo $post_id;?>"><?php echo $post_title; ?></a>
+                            <a href="post_details.php?p_id=<?php echo $post_id;?>"><?php echo $post_title; ?></a>
                         </h2>
                         <p class="lead">
-                            by <a href="index.php"><?php echo $post_author; ?></a>
+                            by <a href="author_posts.php?author=<?php echo $post_author;?>" > <?php echo ucwords($post_author);?> </a>
                         </p>
                         <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date; ?></p>
                         <hr>
                         <img class="img-responsive img-rounded" src="images/<?php echo $post_image; ?> " alt="">
                         <hr>
                         <p><?php echo $post_content; ?></p>
-                        <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                        <a class="btn btn-primary" href="post_details.php?p_id=<?php echo $post_id;?>" >Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                         <hr>
 

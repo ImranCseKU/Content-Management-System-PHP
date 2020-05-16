@@ -5,23 +5,25 @@
 
     if(isset($_SESSION['user_id'])){
         $the_user_id = $_SESSION['user_id'];
+
+        //get user details information
+        $query = "SELECT * FROM users WHERE user_id=$the_user_id;";
+        $get_user_details = mysqli_query($connection, $query) or die(mysqli_error($connection));
+
+        $row = mysqli_fetch_assoc($get_user_details);
+        
+        $user_id = $row['user_id'];
+        $user_firstname = $row['user_firstname'];
+        $user_lastname = $row['user_lastname'];
+        $user_email = $row['user_email'];
+        $user_role = $row['user_role'];
+        $db_user_img = $row['user_image'];
+        $username = $row['username'];
+        $user_password = $row['user_password'];
     }
 
-    $query = "SELECT * FROM users WHERE user_id=$the_user_id;";
-    $get_user_details = mysqli_query($connection, $query);
-
-    $row = mysqli_fetch_assoc($get_user_details);
     
-    $user_id = $row['user_id'];
-    $user_firstname = $row['user_firstname'];
-    $user_lastname = $row['user_lastname'];
-    $user_email = $row['user_email'];
-    $user_role = $row['user_role'];
-    $user_img = $row['user_image'];
-    $username = $row['username'];
-    $user_password = $row['user_password'];      
 
-    
 
     if(isset($_POST['update_profile'])){
         $user_firstname = mysqli_real_escape_string($connection,$_POST['user_firstname']);
@@ -47,8 +49,8 @@
         
         
         //if image not set..set it privious
-        if(empty($post_images)){
-            $user_image = $user_img;
+        if(empty($user_image)){
+            $user_image_unique_name = $db_user_img;
         }
 		
         $query_for_update = "UPDATE users SET ";
@@ -57,12 +59,13 @@
         $query_for_update .= "user_firstname='$user_firstname',";
         $query_for_update .= "user_lastname= '$user_lastname' ,";
         $query_for_update .= "user_email='$user_email',";
-        $query_for_update .= "user_image='$user_image' ";
-        // $query_for_update .= "user_role='$user_role' ";
+        $query_for_update .= "user_image='$user_image_unique_name' ";
         $query_for_update .= "WHERE user_id= $user_id ;";
 
         $user_update = mysqli_query($connection, $query_for_update) or die(mysqli_error($connection));
         header("Location:users.php");
+
+        
     }
 
 ?>
@@ -89,17 +92,17 @@
                             Welcome To Admin Panel
                             <small><?php echo $_SESSION['username']; ?></small>
                         </h1>
-
+                       
                         <div class="col-md-10 well" >
                             <form action="" method="post" enctype = "multipart/form-data">
                                 
                                 <div class="form-group">
                                     <label for="">First Name</label>
-                                    <input type="text" class="form-control" name="user_firstname" value="<?php echo $user_firstname; ?>">
+                                    <input type="text" class="form-control" name="user_firstname" value="<?php echo $user_firstname; ?>" placeholder="First Name">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Last Name</label>
-                                    <input type="text" class="form-control" name="user_lastname" value="<?php echo $user_lastname; ?>">
+                                    <input type="text" class="form-control" name="user_lastname" value="<?php echo $user_lastname; ?>" placeholder="Last Name">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Email</label>
@@ -131,7 +134,7 @@
 
                                 <div class="form-group">
                                     <label for="">User Image</label></br>
-                                    <img src="../images/<?php echo $user_img; ?>" width="50px" height='60px' alt="">
+                                    <img src="../images/<?php echo $db_user_img; ?>" width="50px" height='60px' alt="">
                                     <input type="file" class="form-control" name="img">
                                 </div>
 

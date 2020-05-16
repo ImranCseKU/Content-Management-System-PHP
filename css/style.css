@@ -32,3 +32,11 @@ a:hover{
     color: #fff;
     font-weight:bold;
 }
+
+#navigation-item li{
+    font-weight:bold;
+}
+
+#navigation-item li a:hover{
+    color: #EB5F3A;
+}
